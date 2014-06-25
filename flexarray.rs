@@ -26,7 +26,7 @@ trait FlexArray<T> {
         unsafe {
             transmute::<Slice<T>,_>(Slice {
                 data: transmute(self.flex_element()),
-                len: self.len() as uint,
+                len: self.len(),
             })
         }
     }
@@ -38,7 +38,7 @@ trait FlexArray<T> {
         unsafe {
             transmute::<Slice<T>,_>(Slice {
                 data: transmute(self.flex_element()),
-                len: self.len() as uint,
+                len: self.len(),
             })
         }
     }

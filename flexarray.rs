@@ -19,24 +19,24 @@ trait FlexArray<T> {
         }
     }
 
-    fn as_slice<'r, T: FlexArray<U>, U>(&'r self) -> &'r [U] {
+    fn as_slice<'r>(&'r self) -> &'r [T] {
         use std::mem::transmute;
         use std::raw::Slice;
 
         unsafe {
-            transmute::<Slice<U>, &'r [U]>(Slice {
+            transmute::<Slice<T>,_>(Slice {
                 data: transmute(self.flex_element()),
                 len: self.len() as uint,
             })
         }
     }
 
-    fn as_mut_slice<'r, T: FlexArray<U>, U>(&'r mut self) -> &'r mut [U] {
+    fn as_mut_slice<'r>(&'r mut self) -> &'r mut [T] {
         use std::mem::transmute;
         use std::raw::Slice;
 
         unsafe {
-            transmute::<Slice<U>, &'r mut [U]>(Slice {
+            transmute::<Slice<T>,_>(Slice {
                 data: transmute(self.flex_element()),
                 len: self.len() as uint,
             })
@@ -68,11 +68,11 @@ fn main() {
         info: FlexArrayField([])
     });
 
-    for (i, elem) in foo.as_mut_slice::<Foo,_>().mut_iter().enumerate() {
+    for (i, elem) in foo.as_mut_slice().mut_iter().enumerate() {
         *elem = 2 * i;
     }
 
-    for elem in foo.as_slice::<Foo,_>().iter() {
+    for elem in foo.as_slice().iter() {
         println!("{}", elem);
     }
 }

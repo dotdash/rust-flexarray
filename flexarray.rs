@@ -1,5 +1,3 @@
-extern crate core;
-
 struct FlexArrayField<T>([T, ..0]);
 
 trait FlexArray<T> {
